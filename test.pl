@@ -18,11 +18,12 @@ binmode $FILEOUT;
 
 my $data;
 my $data_1to1;
-#my $n;
-#my $n1;
-my $cnt = 0;
 
+my $cnt = 0;
 my $cnt2 = 1;
+my $bukva = "X";
+
+printf("addr\t1to1\tfile\tdiffbits\tdiffmm\n");
 
 while ((my $n = read $FILE, $data, 2) != 0) {
 	my $n1 = read $FILE1TO1, $data_1to1, 2;
@@ -35,18 +36,13 @@ while ((my $n = read $FILE, $data, 2) != 0) {
 	print $FILEOUT pack 's*', $hex-1;
 	$cnt+=2;
 	if ( ($cnt % 130) == 0 ) {
-		print"== X ========== ".$cnt2++."\n";
+		print"== $bukva ========== ".$cnt2++."\n";
 	}
 	if ( ($cnt % 8450) == 0 ) {
-                print"## Y ########## ".$cnt2++."\n";
+                #print"## Y ########## ".$cnt2++."\n";
+		$bukva = "Y";
         }
 }
-
-#while (1) {
-#    my $success = read $in, $cont, 100, length($cont);
-#    die $! if not defined $success;
-#    last if not $success;
-#}
 
 close($FILE1TO1);
 close($FILEOUT);
