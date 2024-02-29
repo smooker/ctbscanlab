@@ -34,8 +34,8 @@ printf("addr\tnum\t1to1\tfile\tdiffbits\tdiffmm\n");
 
 while ((my $n = read $FILE, $data, 2) != 0) {
 	my $n1 = read $FILE1TO1, $data_1to1, 2;
-	my $hex = unpack 's*', $data; #makes string
-	my $hex_1to1 = unpack 's*', $data_1to1; #makes string
+	my $hex = unpack 'S*', $data; #makes string
+	my $hex_1to1 = unpack 'S*', $data_1to1; #makes string
 	#my $uint16 = pack 'S', $data;
 	my $diff = $hex_1to1-$hex;
 	my $diffinmm = $diff/358;
@@ -43,7 +43,8 @@ while ((my $n = read $FILE, $data, 2) != 0) {
 	print $FILEOUT pack 's*', $hex; #the same as original
 
 	if ($cnt < 8450) {
-		$arrX[$y][$x] = $hex_1to1;
+		$arrX[$y][$x] = $hex;
+		#$arrX[$y][$x] = $hex_1to1;
 		if ($x == 64) {	
 			$y++;
 			$x=0;
@@ -51,7 +52,8 @@ while ((my $n = read $FILE, $data, 2) != 0) {
 			$x++;
 		}
 	} else {
-		$arrY[$y][$x] = $hex_1to1;
+		$arrY[$x][$y] = $hex;
+		#$arrY[$x][$y] = $hex_1to1;
 		if ($y == 64) {
 			$x++;
 			$y=0;
@@ -71,15 +73,17 @@ while ((my $n = read $FILE, $data, 2) != 0) {
 		$bukva = "Y";
 		$cnt2 = 1;
 		$y=0;
+		$x=0;
         }
 }
 open my $F2, '>vgz.dat' or die;
+	
+	my $y1 = 0;
 
-	foreach my $row (@arrX) {
+	for (my $y1=0; $y1<65;$y1++) {
 		#print "X\t";
-		my $y = 0;
-		for (my $i=0;$i<65;$i++) {
-			print $F2 $row->[$i]."\t".$arrY[$y][$i]."\n";
+		for (my $x1=0;$x1<65;$x1++) {
+			print $F2 $arrX[$y1][$x1]."\t".$arrY[$y1][$x1]."\n";
 		}
 		#print "\n";
 	}
