@@ -3,7 +3,8 @@ use warnings;
 use strict;
 
 my $filename_1to1 = "Cor_1to1.ctb";
-my $filename = "10254358.CTB";
+#my $filename = "10254358.CTB";
+my $filename = "50-1631-254-1.ctb";
 
 open my $FILE, '<:raw', $filename or die;
 binmode $FILE;
