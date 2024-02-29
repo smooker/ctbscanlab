@@ -1,4 +1,9 @@
 plot 'vgz.dat' using 1:2:(sprintf("(%d, %d)", $1, $2))
+#set term png
+set term postscript
+set output "printme.ps" 
+replot
+set term x11
 pause -1
 x=0.; y=0.
 plot 'vgz.dat' u (x=x+$1):(y=y+$2) w p ls 1
