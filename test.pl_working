@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $filename = "Cor_1to1.ctb";
+#my $filename = "10254358.CTB";
+open my $FILE, '<:raw', $filename or die;
+binmode $FILE;
+
+
+my $data;
+my $n;
+my $cnt = 0;
+while (($n = read $FILE, $data, 2) != 0) {
+	my $hex = unpack 'H*', $data; #makes string
+	#my $uint16 = pack 'S', $data;
+	printf("%04x: %s\n", $cnt, $hex);
+	$cnt+=2;
+	if ( ($cnt % 130) == 0 ) {
+		print"===================================\n";
+	}
+}
+
+#while (1) {
+#    my $success = read $in, $cont, 100, length($cont);
+#    die $! if not defined $success;
+#    last if not $success;
+#}
+
+
+close(FILE);
